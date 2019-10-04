@@ -11,7 +11,7 @@ import { green } from '@material-ui/core/colors';
 import Divider from '@material-ui/core/Divider';
 import MenuItem from '@material-ui/core/MenuItem';
 import logo from '../../assets/winx.svg';
-
+import ErrorIcon from '@material-ui/icons/Error';
 const useStyles = makeStyles(theme => ({
     root: {
       display: 'flex',
@@ -52,11 +52,15 @@ export default function Login() {
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
     const [host, setHost] = useState('');
+    const [hasError, setError] = useState();
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     function handleLogin(event) {
         event.preventDefault()
-        setLoading(true);
 
-        //setLoading(false);
+        setError('xd');
     }
 
     return (
@@ -66,6 +70,11 @@ export default function Login() {
                 <p>
                     Gerencie seu <strong>time</strong> de desenvolvedores e <strong>aumente</strong> a produtividade.
                 </p>
+                {hasError && (
+                <div className="alert-danger">
+                    <ErrorIcon fontSize="small"/> <p>{hasError}</p>
+                </div>
+                )}
 
                 <form onSubmit={handleLogin}>      
                 <TextField
@@ -74,6 +83,8 @@ export default function Login() {
         type="email"
         className="inputLogin"
         name="email"
+        value={email}
+        onChange={event => setEmail(event.target.value)}
         autoComplete="email"
         margin="normal"
         variant="outlined"
@@ -81,7 +92,9 @@ export default function Login() {
                 <TextField
         id="outlined-password-input"
         label="Senha"
+        onChange={event => setPassword(event.target.value)}
         type="password"
+        value={password}
         className="inputLogin"
         autoComplete="current-password"
         margin="normal"
